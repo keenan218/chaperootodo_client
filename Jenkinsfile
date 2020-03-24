@@ -1,21 +1,26 @@
 pipeline{
         agent any
         stages{
-            stage('Build Image'){
-                steps{
-                    sh "sudo docker build -t chaperoo ."
-                }
-            }
             stage('Clean'){
                 steps{
-                    sh label: '', script: '''if [ "$(sudo docker ps -aq -f name=chaptodo)" ]; then
-                        sudo docker rm -f chaptodo
+                    sh label: '', script: '''if [ "$(docker ps -aq -f name=jordangrindrod/chaperoo-client)" ]; then
+                        docker rm -f jordangrindrod/chaperoo_client
                     fi'''
                     }
                 }
-            stage('Run Container'){
+            stage('Build Images'){
                 steps{
-                    sh "sudo docker run -d --name chaptodo -p 80:80 chaperoo"
+                    sh "docker build -t jordangrindrod/chaperoo-client ."
+                }
+            }
+            stage('Push Image'){
+                steps{
+                    sh "docker push jordangrindrod/chaperoo-client"
+                }
+            }
+            stage('Run App'){
+                steps{
+                    sh "docker-compose up -d"
                 }
             }
         }    
