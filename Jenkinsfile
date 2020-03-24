@@ -3,9 +3,11 @@ pipeline{
         stages{
             stage('Clean'){
                 steps{
-                    sh label: '', script: '''if [ "$(sudo docker ps -aq -f name=jordangrindrod/chaperoo-client)" ]; then
-                        sudo docker rm -f jordangrindrod/chaperoo_client
-                    fi'''
+                    sh label: '', script: '''
+                    if [ "$(sudo docker images name=jordangrindrod/chaperoo-client)" ]; then
+                        sudo docker rmi jordangrindrod/chaperoo_client
+                    fi
+                    '''
                     }
                 }
             stage('Build Image'){
