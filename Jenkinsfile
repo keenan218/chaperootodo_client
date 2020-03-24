@@ -5,7 +5,7 @@ pipeline{
                 steps{
                     sh label: '', script: '''
                     if [ "$(sudo docker images name=jordangrindrod/chaperoo-client)" ]; then
-                        sudo docker rmi jordangrindrod/chaperoo_client
+                        sudo docker rmi jordangrindrod/chaperoo_client -q
                     fi
                     '''
                     }
