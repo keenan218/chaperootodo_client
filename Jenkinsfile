@@ -3,24 +3,24 @@ pipeline{
         stages{
             stage('Clean'){
                 steps{
-                    sh label: '', script: '''if [ "$(docker ps -aq -f name=jordangrindrod/chaperoo-client)" ]; then
-                        docker rm -f jordangrindrod/chaperoo_client
+                    sh label: '', script: '''if [ "$(sudo docker ps -aq -f name=jordangrindrod/chaperoo-client)" ]; then
+                        sudo docker rm -f jordangrindrod/chaperoo_client
                     fi'''
                     }
                 }
             stage('Build Images'){
                 steps{
-                    sh "docker build -t jordangrindrod/chaperoo-client ."
+                    sh "sudo docker build -t jordangrindrod/chaperoo-client ."
                 }
             }
             stage('Push Image'){
                 steps{
-                    sh "docker push jordangrindrod/chaperoo-client"
+                    sh "sudo docker push jordangrindrod/chaperoo-client"
                 }
             }
             stage('Run App'){
                 steps{
-                    sh "docker-compose up -d"
+                    sh "sudo docker-compose up -d"
                 }
             }
         }    
