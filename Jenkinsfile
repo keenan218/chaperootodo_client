@@ -8,14 +8,9 @@ pipeline{
                     fi'''
                     }
                 }
-            stage('Build Images'){
+            stage('Build Image'){
                 steps{
                     sh "sudo docker build -t jordangrindrod/chaperoo-client ."
-                }
-            }
-            stage('Push Image'){
-                steps{
-                    sh "sudo docker push jordangrindrod/chaperoo-client"
                 }
             }
             stage('Run App'){
